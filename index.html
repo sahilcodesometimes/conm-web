@@ -1,0 +1,1582 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Computer Oriented Numerical Methods - Practical Work</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body id="top">
+    <header class="site-header">
+      <nav class="navbar">
+        <span class="brand">CONM Practicals</span>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Practical Programs</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="home" class="hero">
+        <h1>Computer Oriented Numerical Methods</h1>
+        <p class="subtitle">Practical Work &ndash; C Programming</p>
+        <p>
+          This website contains the practical programs and solutions covered in
+          the Computer Oriented Numerical Methods (CONM) subject. Each program
+          is given with its question, the C source code and a sample run in the
+          console.
+        </p>
+      </section>
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          This is my practical file for the CONM subject. It covers root
+          finding, linear equations, interpolation, numerical integration and
+          differential equations, all written in C.
+        </p>
+        <!-- Edit the details below with your own information -->
+        <dl class="student-info">
+          <dt>Name</dt>
+          <dd>Sahil Rawat</dd>
+          <dt>Roll Number</dt>
+          <dd>4365/25</dd>
+          <dt>Class / Semester</dt>
+          <dd>BCA - II (Sem 3)</dd>
+          <dt>Subject</dt>
+          <dd>Computer Oriented Numerical Methods (CONM)</dd>
+        </dl>
+      </section>
+      <section id="programs">
+        <h2>Practical Programs</h2>
+        <p>
+          Click a program to jump to it.
+        </p>
+        <ol class="toc">
+          <li>
+            <a href="#p1"
+              >Program: 1 – Solve a non-linear equation using the Bisection
+              Method</a
+            >
+          </li>
+          <li>
+            <a href="#p2"
+              >Program: 2 – Solve a non-linear equation using the False Position
+              Method</a
+            >
+          </li>
+          <li>
+            <a href="#p3"
+              >Program: 3 – Solve a non-linear equation using the Newton Raphson
+              Method</a
+            >
+          </li>
+          <li>
+            <a href="#bv">Program: 4 – Birge Vieta Method (polynomial root)</a>
+          </li>
+          <li>
+            <a href="#p5"
+              >Program: 5 – Solve a system of linear equations using the Gauss
+              Elimination Method</a
+            >
+          </li>
+          <li>
+            <a href="#p6"
+              >Program: 6 – Solve a system of linear equations using the Gauss
+              Jordan Method</a
+            >
+          </li>
+          <li>
+            <a href="#p8"
+              >Program: 7 – Solve a system of linear equations using the Gauss
+              Seidel Method</a
+            >
+          </li>
+          <li>
+            <a href="#p10"
+              >Program: 8 – Generate the Newton Forward Differences Table</a
+            >
+          </li>
+          <li>
+            <a href="#p11"
+              >Program: 9 – Generate the Newton Backward Differences Table</a
+            >
+          </li>
+          <li>
+            <a href="#p12"
+              >Program: 10 – Generate the Newton Divided Differences Table</a
+            >
+          </li>
+          <li>
+            <a href="#p15"
+              >Program: 11 – Implement the Newton Divided Differences
+              Interpolation Polynomial</a
+            >
+          </li>
+          <li>
+            <a href="#p16"
+              >Program: 12 – Implement the Lagrangian Interpolation
+              Polynomial</a
+            >
+          </li>
+          <li>
+            <a href="#inv"
+              >Program: 13 – Inverse Lagrange Interpolation (find x for a given
+              y)</a
+            >
+          </li>
+          <li>
+            <a href="#p17"
+              >Program: 14 – Implement the Trapezoidal Rule (for a known
+              function)</a
+            >
+          </li>
+          <li>
+            <a href="#p18"
+              >Program: 15 – Implement Simpson&#x27;s 1/3 Rule for Integration
+              (known function)</a
+            >
+          </li>
+          <li>
+            <a href="#p19"
+              >Program: 16 – Implement Simpson&#x27;s 3/8 Rule for Integration
+              (known function)</a
+            >
+          </li>
+          <li>
+            <a href="#eu"
+              >Program: 17 – Euler&#x27;s Method (solve a first-order
+              differential equation)</a
+            >
+          </li>
+          <li>
+            <a href="#me"
+              >Program: 18 – Modified Euler&#x27;s Method (solve a differential
+              equation)</a
+            >
+          </li>
+          <li>
+            <a href="#rk2">Program: 19 – Runge-Kutta Second Order Method</a>
+          </li>
+          <li>
+            <a href="#rk4">Program: 20 – Runge-Kutta Fourth Order Method</a>
+          </li>
+        </ol>
+        <article class="program" id="p1">
+          <h3>Program: 1</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a non-linear equation using the
+            Bisection Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#define f(x) (x*x*x-x-4)
+void main()
+{
+int i=0;
+float f1,f2,f3,x1,x2,x3,epsilon,delta;
+clrscr();
+printf(&quot;\nEnter two initial approximations x1,x2 : &quot;);
+scanf(&quot;%f, %f&quot;,&amp;x1,&amp;x2);
+printf(&quot;\nEnter a very small number epsilon : &quot;);
+scanf(&quot;%f &quot;,&amp;epsilon);
+f1=f(x1);
+f2=f(x2);
+
+if (f1*f2&gt;0)
+        {
+        printf(&quot;\nInitial approximations x1=%f, x2=%f are not proper&quot;,x1,x2);
+        exit(0);
+        }
+do{
+        x3=(x1+x2)/2;
+        i++;
+        printf(&quot;\nNext approximation after %d iteration  is %f&quot;,i,x3);
+        f3=f(x3);
+        if(f1*f3&lt;0)
+                {
+                x2=x3;
+                f2=f3;
+                }
+        else
+                {
+                x1=x3;
+                f1=f3;
+                }
+        }while((fabs((x2-x1)/x2)&gt;epsilon)  &amp;&amp; (f3!=0));
+printf(&quot;\nRoot=%10.4f&quot;,x3);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter two initial approximations x1,x2 : <span class="in">1, 3</span>
+
+Enter a very small number epsilon : <span class="in">0.001</span>
+
+Next approximation after 1 iteration  is 2.000000
+Next approximation after 2 iteration  is 1.500000
+Next approximation after 3 iteration  is 1.750000
+Next approximation after 4 iteration  is 1.875000
+Next approximation after 5 iteration  is 1.812500
+Next approximation after 6 iteration  is 1.781250
+Next approximation after 7 iteration  is 1.796875
+Next approximation after 8 iteration  is 1.789062
+Next approximation after 9 iteration  is 1.792969
+Next approximation after 10 iteration  is 1.794922
+Next approximation after 11 iteration  is 1.795898
+Root=    1.7959</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p2">
+          <h3>Program: 2</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a non-linear equation using the
+            False Position Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#define f(x) (x*x*x-x-4)
+void main()
+{
+int k=0;
+float f1,f2,f3,x1,x2,x3,epsilon,delta;
+clrscr();
+printf(&quot;\nEnter two initial approximations x1,x2 : &quot;);
+scanf(&quot;%f, %f&quot;,&amp;x1,&amp;x2);
+printf(&quot;\nEnter two very small number epsilon and delta &quot;);
+scanf(&quot;%f, %f&quot;,&amp;epsilon,&amp;delta);
+f1=f(x1);
+f2=f(x2);
+if (f1*f2&gt;0)
+        {
+        printf(&quot;\nInitial approximation x1=%f, x2=%f are not proper&quot;,x1,x2);
+        exit(0);
+        }
+do{
+        if(fabs(f2-f1)&lt;delta)
+                {
+                printf(&quot;\nSlope curve is too small &quot;);
+                exit(0);
+                }
+        x3=(x1*f2-x2*f1)/(f2-f1);
+        k++;
+        printf(&quot;\nNext approximation after %d iteration  is %f&quot;,k,x3);
+        f3=f(x3);
+        if(f1*f3&gt;0)
+                {
+                x2=x3;
+                f2=f3;
+                }
+        else
+                {
+                x1=x3;
+                f1=f3;
+                }
+        }while((fabs(x2-x1)&gt;epsilon)  &amp;&amp; (f3!=0));
+printf(&quot;\nRoot=%10.4f&quot;,x3);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter two initial approximations x1,x2 : <span class="in">1, 3</span>
+
+Enter two very small number epsilon and delta <span class="in">0.001, 0.001</span>
+
+Next approximation after 1 iteration  is 1.333333
+Next approximation after 2 iteration  is 2.285714
+Next approximation after 3 iteration  is 1.660737
+Next approximation after 4 iteration  is 1.848619
+Next approximation after 5 iteration  is 1.778223
+Next approximation after 6 iteration  is 1.802839
+Next approximation after 7 iteration  is 1.794008
+Next approximation after 8 iteration  is 1.797148
+Next approximation after 9 iteration  is 1.796028
+Next approximation after 10 iteration  is 1.796427
+Next approximation after 11 iteration  is 1.796285
+Next approximation after 12 iteration  is 1.796335
+Next approximation after 13 iteration  is 1.796317
+Next approximation after 14 iteration  is 1.796323
+Next approximation after 15 iteration  is 1.796321
+Next approximation after 16 iteration  is 1.796322
+Next approximation after 17 iteration  is 1.796322
+Root=    1.7963</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p3">
+          <h3>Program: 3</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a non-linear equation using the
+            Newton Raphson Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#define f(x) (x*x*x-x-4)
+#define df(x) (3*x*x-1)
+void main()
+{
+int k,n;
+float x1,x2,epsilon,delta,err;
+printf(&quot;\nEnter the value of x1:&quot;);
+scanf(&quot;%f&quot;,&amp;x1);
+printf(&quot;\nEnter the values of epsilon and delta:&quot;);
+scanf(&quot;%f, %f&quot;,&amp;epsilon,&amp;delta);
+printf(&quot;\nEnter the number of iteration:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(k=1;k&lt;n;k++)
+        {
+        if(fabs(df(x1))&lt;delta)
+                {printf(&quot;\nSlope of curve is too small.&quot;);
+                exit(0);
+                }
+x2=x1-f(x1)/df(x1);
+err=fabs((x2-x1)/x2);
+if (err&lt;epsilon)
+        {
+        printf(&quot;Root=%f&quot;,x2);
+        exit(0);
+        }
+x1=x2;
+        }
+printf(&quot;solution does not converge after %d iterations&quot;,n);
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+Enter the value of x1:<span class="in">2</span>
+
+Enter the values of epsilon and delta:<span class="in">0.0001, 0.0001</span>
+
+Enter the number of iteration:<span class="in">20</span>
+Root=1.796322</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="bv">
+          <h3>Program: 4</h3>
+          <p class="question">
+            <strong>Question:</strong> Birge Vieta Method (polynomial root)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include &lt;conio.h&gt;
+void main()
+{
+float p[30], a[20], b[20], c[20], epsilon;   /* corrected: p is now an array */
+float p0;
+int n, maxitr;
+int i, k;
+printf(&quot;Enter the degree of polynomial:\n&quot;);
+scanf(&quot;%d&quot;, &amp;n);
+printf(&quot;Enter the initial approximation to root:\n&quot;);
+scanf(&quot;%f&quot;, &amp;p0);
+printf(&quot;enter the prescribed Tolerance in the root:\n&quot;);
+scanf(&quot;%f&quot;, &amp;epsilon);
+printf(&quot;Enter the maximum number of Iterations&quot;);
+scanf(&quot; %d&quot;, &amp;maxitr);
+for(i = 0 ; i &lt;= n; i++)
+scanf(&quot;%f&quot;, &amp;a[i]);
+p[0] = 0;       /* corrected: p[0] was never set */
+p[1] = p0;      /* corrected: first approximation */
+for( k = 1 ; k&lt;= maxitr; k++)
+{
+    b[0] = a[0];
+    for (i =1; i&lt;=n; i++)
+    {
+        b[i]=a[i] + p[k]*b[i-1];
+    }
+    c[0] = b[0];
+    for(i=1; i&lt;=(n-1); i++)
+    {
+        c[i]=b[i]+p[k]*c[i-1];
+    }
+    p[k+1] = p[k] - b[n] / c[n-1];
+    if( fabs ((p[k-1]-p[k]) / p[k+1])&lt;= epsilon)
+    {
+        printf(&quot;Root is %f&quot;, p[k+1]);
+        getch();
+        exit(0);      /* corrected: exit needs an argument */
+    }
+}
+printf(&quot;Root not found in %d iterations&quot;, maxitr);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>Enter the degree of polynomial:
+<span class="in">3</span>
+Enter the initial approximation to root:
+<span class="in">2.5</span>
+enter the prescribed Tolerance in the root:
+<span class="in">0.0001</span>
+Enter the maximum number of Iterations<span class="in">20</span>
+<span class="in">1</span>
+<span class="in">-6</span>
+<span class="in">11</span>
+<span class="in">-6</span>
+Root is 1.000000</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p5">
+          <h3>Program: 5</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a system of linear equations using
+            the Gauss Elimination Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#define max 50
+void main()
+{
+int i,n,j,k;
+float a[max][max],x[max],u,sum;
+clrscr();
+printf(&quot;\n Enter the number of equation:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;\n Enter the coefficients of unknowns and RHS value of equation %d \n&quot;,i+1);
+        for(j=0;j&lt;n+1;j++)
+                scanf(&quot;%f&quot;,&amp;a[i][j]);
+        }
+for(k=0;k&lt;n-1;k++)
+        {
+        if(a[k][k]==0)
+                {
+                printf(&quot;\n division by zero&quot;);
+
+                exit(0);
+                }
+        for(i=k+1;i&lt;n;i++)
+                {
+                u=a[i][k]/a[k][k];
+                for(j=0;j&lt;n+1;j++)
+                        a[i][j]=a[i][j]-u*a[k][j];
+                }
+        }
+for(i=n-1;i&gt;=0;i--)
+        {
+        sum=0;
+        for(j=i+1;j&lt;n;j++)
+                sum+=a[i][j]*x[j];
+        x[i]=(a[i][n]-sum)/a[i][i];
+        }
+printf(&quot;\n solution of system linear equations is\n&quot;);
+for(i=0;i&lt;n;i++)
+        printf(&quot;\n x[%d]=%.3f&quot;, i+1,x[i]);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+ Enter the number of equation:<span class="in">3</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 1 
+<span class="in">2 1 1 7</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 2 
+<span class="in">1 3 2 13</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 3 
+<span class="in">1 1 4 15</span>
+
+ solution of system linear equations is
+
+ x[1]=1.000
+ x[2]=2.000
+ x[3]=3.000</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p6">
+          <h3>Program: 6</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a system of linear equations using
+            the Gauss Jordan Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#define max 50
+void main()
+{
+int i,n,j,k;
+float a[max][max],x[max],u,sum,temp;
+clrscr();
+printf(&quot;\n Enter the number of equation:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;\n Enter the coefficients of unknowns and RHS value of equation %d \n&quot;,i+1);
+        for(j=0;j&lt;n+1;j++)
+                scanf(&quot;%f&quot;,&amp;a[i][j]);
+        }
+for(k=0;k&lt;n;k++)
+        {
+        if(a[k][k] == 0)
+                {
+                printf(&quot;\n Division by zero \n&quot;);
+                exit(0);
+                }
+        temp=a[k][k];
+        for(j=k;j&lt;n+1;j++)
+                a[k][j]=a[k][j]/temp;
+
+        for(i=0;i&lt;n;i++)
+                {
+                if(i!=k)
+                        {
+                        u=a[i][k];
+                        for(j=k;j&lt;n+1;j++)
+                                a[i][j]=a[i][j]-u*a[k][j];
+                        }
+                }
+        }
+printf(&quot;\n solution of system of linear equation is\n&quot;);
+for(i=0;i&lt;n;i++)
+        {
+        x[i]=a[i][n];
+        printf(&quot;\n x[%d]=%.3f&quot;,i+1,x[i]);
+        }
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+ Enter the number of equation:<span class="in">3</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 1 
+<span class="in">2 1 1 7</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 2 
+<span class="in">1 3 2 13</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 3 
+<span class="in">1 1 4 15</span>
+
+ solution of system of linear equation is
+
+ x[1]=1.000
+ x[2]=2.000
+ x[3]=3.000</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p8">
+          <h3>Program: 7</h3>
+          <p class="question">
+            <strong>Question:</strong> Solve a system of linear equations using
+            the Gauss Seidel Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;math.h&gt;
+#include&lt;stdlib.h&gt;
+void main()
+{
+int n,maxiter,i,j,k;
+float a[10][11],x[10],sum,temp,error,e,bigerror;
+clrscr();
+printf(&quot;\n Enter number of equation:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;\n Enter the coefficients of unknowns and RHS value of equation %d\n&quot;,i+1);
+        for(j=0;j&lt;n+1;j++)
+                scanf(&quot;%f&quot;,&amp;a[i][j]);
+        }
+printf(&quot;\n Enter the maximum number of iterations:&quot;);
+scanf(&quot;%d&quot;,&amp;maxiter);
+printf(&quot;\n Enter a very small number epsilan:&quot;);
+scanf(&quot;%f&quot;,&amp;e);
+for(i=0;i&lt;n;i++)
+        x[i]=0;
+for(k=1;k&lt;=maxiter;k++)
+        {
+        bigerror=0;
+        for(i=0;i&lt;n;i++)
+                {
+                sum=0;
+                for(j=0;j&lt;n;j++)
+                        {
+                        if(i!=j)
+                                sum+=a[i][j]*x[j];
+                        }
+                temp=(a[i][n]-sum)/a[i][i];
+                error=fabs((temp-x[i])/temp);
+                if(error&gt;bigerror)
+                        bigerror=error;
+        x[i]=temp;                  /* completed: update x[i] */
+        }
+    if(bigerror&lt;e)              /* completed: convergence test */
+        {
+        printf(&quot;
+ Converged after %d iterations. Solution is
+&quot;,k);
+        for(i=0;i&lt;n;i++)
+                printf(&quot;
+ x[%d]=%.4f&quot;,i+1,x[i]);
+        getch();
+        exit(0);
+        }
+    }
+printf(&quot;
+ Solution does not converge in %d iterations&quot;,maxitr);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+ Enter number of equation:<span class="in">3</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 1
+<span class="in">10 1 1 12</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 2
+<span class="in">2 10 1 13</span>
+
+ Enter the coefficients of unknowns and RHS value of equation 3
+<span class="in">2 2 10 14</span>
+
+ Enter the maximum number of iterations:<span class="in">25</span>
+
+ Enter a very small number epsilan:<span class="in">0.0001</span>
+
+ Converged after 5 iterations. Solution is
+
+ x[1]=1.0000
+ x[2]=1.0000
+ x[3]=1.0000</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p10">
+          <h3>Program: 8</h3>
+          <p class="question">
+            <strong>Question:</strong> Generate the Newton Forward Differences
+            Table
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+void main()
+{
+int i,j,n,m,l;
+float d[20][20],x[20],y[20];
+clrscr();
+printf(&quot;Enter the value of N:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+printf(&quot;Enter %d pairs of (x,y)\n&quot;,n);
+for(i=0;i&lt;n;i++)
+
+        scanf(&quot;%f,%f&quot;,&amp;x[i],&amp;y[i]);
+for(j=0;j&lt;n-1;j++)
+        {
+        for(i=0;i&lt;n-j;i++)
+        {
+                if(j==0)
+                        d[i][j]=y[i+1]-y[i];
+        else
+                        d[i][j]=d[i+1][j-1]-d[i][j-1];
+                }
+        }
+clrscr();
+m=6;
+l=6;
+gotoxy(m,l);
+printf(&quot;X&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,x[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+m=m+8;
+l=6;
+gotoxy(m,l);
+printf(&quot;Y&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,y[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+for(j=0;j&lt;n-1;j++)
+        {
+        m=m+8;
+        l=6;
+        gotoxy(m,l);
+        printf(&quot;D%d&quot;,j+1);
+        l= l+2;
+        gotoxy(m,l);
+        for(i=0;i&lt;n-j-1;i++)
+                {
+                printf(&quot;%.2f&quot;,d[i][j]);
+                l=l+2;
+                gotoxy(m,l);
+                }
+        }
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter the value of N:<span class="in">5</span>
+Enter 5 pairs of (x,y)
+<span class="in">1,1</span>
+<span class="in">2,8</span>
+<span class="in">3,27</span>
+<span class="in">4,64</span>
+<span class="in">5,125</span>
+[screen is cleared by clrscr(); the table is drawn with gotoxy()]
+
+     X       Y       D1      D2      D3      D4
+
+     1.00    1.00    7.00    12.00   6.00    0.00
+
+     2.00    8.00    19.00   18.00   6.00
+
+     3.00    27.00   37.00   24.00
+
+     4.00    64.00   61.00
+
+     5.00    125.00</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p11">
+          <h3>Program: 9</h3>
+          <p class="question">
+            <strong>Question:</strong> Generate the Newton Backward Differences
+            Table
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;graphics.h&gt;
+void main()
+{
+int i,j,n,m,l,o=4;
+float d[20][20],x[20],y[20];
+clrscr();
+printf(&quot;Enter the value of N:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+printf(&quot;Enter %d pairs of (x,y)\n&quot;,n);
+for(i=0;i&lt;n;i++)
+        scanf(&quot;%f,%f&quot;,&amp;x[i],&amp;y[i]);
+clrscr();
+for(j=0;j&lt;n-1;j++)
+        {
+        for(i=j+1;i&lt;n;i++)
+                {
+                if(j==0)
+                        d[i][j]=y[i]-y[i-1];
+                else
+                        d[i][j]=d[i][j-1]-d[i-1][j-1];
+                }
+        }
+m=6;
+l=6;
+gotoxy(m,l);
+printf(&quot;X&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,x[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+m=m+8;
+l=6;
+gotoxy(m,l);
+printf(&quot;Y&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,y[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+for(j=0;j&lt;n-1;j++)
+        {
+        m=m+8;
+        l=6;
+        gotoxy(m,l);
+        printf(&quot;D%d&quot;,j);
+        l=l+o;
+        gotoxy(m,l);
+        for(i=j+1;i&lt;n;i++)
+                {
+                printf(&quot;%.2f&quot;,d[i][j]);
+                l=l+2;
+                gotoxy(m,l);
+                }
+        o=o+2;
+        }
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter the value of N:<span class="in">5</span>
+Enter 5 pairs of (x,y)
+<span class="in">1,1</span>
+<span class="in">2,8</span>
+<span class="in">3,27</span>
+<span class="in">4,64</span>
+<span class="in">5,125</span>
+[screen is cleared by clrscr(); the table is drawn with gotoxy()]
+
+     X       Y       D0      D1      D2      D3
+
+     1.00    1.00
+
+     2.00    8.00    7.00
+
+     3.00    27.00   19.00   12.00
+
+     4.00    64.00   37.00   18.00   6.00
+
+     5.00    125.00  61.00   24.00   6.00    0.00</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p12">
+          <h3>Program: 10</h3>
+          <p class="question">
+            <strong>Question:</strong> Generate the Newton Divided Differences
+            Table
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+void main()
+  {
+  int i,j,n,m,l;
+  float d[20][20],x[20],y[20];
+  clrscr();
+  printf(&quot;Enter the value of N:&quot;);
+  scanf(&quot;%d&quot;,&amp;n);
+  printf(&quot;Enter %d pairs of (x,y)\n&quot;,n);
+  for(i=0;i&lt;n;i++)
+
+        scanf(&quot;%f,%f&quot;,&amp;x[i],&amp;y[i]);
+
+  for(j=1;j&lt;=n-1;j++)
+        {
+        for(i=0;i&lt;n-j;i++)
+                {
+                if(j==1)
+                        d[i][j-1]=(y[i+1]-y[i])/(x[i+j]-x[i]);
+                else
+                        d[i][j-1]=(d[i+1][j-2]-d[i][j-2])/(x[j+i]-x[i]);
+                }
+        }
+clrscr();
+m=6;
+l=6;
+gotoxy(m,l);
+printf(&quot;X&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,x[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+m=m+8;
+l=6;
+gotoxy(m,l);
+printf(&quot;Y&quot; );
+l=l+2;
+gotoxy(m,l);
+for(i=0;i&lt;n;i++)
+        {
+        printf(&quot;%.2f&quot;,y[i]);
+        l=l+2;
+        gotoxy(m,l);
+        }
+for(j=0;j&lt;n-1;j++)
+        {
+        m=m+8;
+        l=6;
+        gotoxy(m,l);
+        printf(&quot;D%d&quot;,j+1);
+        l= l+2;
+        gotoxy(m,l);
+        for(i=0;i&lt;n-j-1;i++)
+                {
+                printf(&quot;%.2f&quot;,d[i][j]);
+                l=l+2;
+                gotoxy(m,l);
+                }
+        }
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter the value of N:<span class="in">5</span>
+Enter 5 pairs of (x,y)
+<span class="in">1,1</span>
+<span class="in">2,8</span>
+<span class="in">3,27</span>
+<span class="in">4,64</span>
+<span class="in">5,125</span>
+[screen is cleared by clrscr(); the table is drawn with gotoxy()]
+
+     X       Y       D1      D2      D3      D4
+
+     1.00    1.00    7.00    6.00    1.00    0.00
+
+     2.00    8.00    19.00   9.00    1.00
+
+     3.00    27.00   37.00   12.00
+
+     4.00    64.00   61.00
+
+     5.00    125.00</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p15">
+          <h3>Program: 11</h3>
+          <p class="question">
+            <strong>Question:</strong> Implement the Newton Divided Differences
+            Interpolation Polynomial
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+void main()
+{
+int k,i,j,n,m,l;
+float a,d[20][20],x[20],y[20],prod,sum;
+clrscr();
+printf(&quot;Enter the value of N:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+printf(&quot;Enter %d pairs of (x,y)\n&quot;,n);
+for(i=0;i&lt;n;i++)
+        scanf(&quot;%f,%f&quot;,&amp;x[i],&amp;y[i]);
+printf(&quot;\nEnter the value of X to interpollate the value of Y:&quot;);
+scanf(&quot;%f&quot;,&amp;a);
+if((a&lt;x[0]) || (a&gt;x[n-1]))
+        {
+        printf(&quot;\nThe value lies outside the tabulated range.&quot;);
+        getch();
+        exit(0);
+        }
+i=1;
+while(a&gt;x[i])   /* corrected */
+        {
+        i++;
+        }
+k=i-1;
+for(j=1;j&lt;=n-1;j++)
+        {
+        for(i=0;i&lt;n-j;i++)
+                {
+                if(j==1)
+                        d[i][j-1]=(y[i+1]-y[i])/(x[i+j]-x[i]);
+                else
+                        d[i][j-1]=(d[i+1][j-2]-d[i][j-2])/(x[j+i]-x[i]);
+                }
+        }
+sum=y[k];
+for(i=0;i&lt;n-k-1;i++)   /* corrected */
+        {
+        prod=1.0;
+        for(j=0;j&lt;=i;j++)
+                prod=prod*(a-x[k+j]);
+        sum+=d[k][i]*prod;
+        }
+printf(&quot;\nInterpolated value of Y= %f&quot;,sum);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter the value of N:<span class="in">5</span>
+Enter 5 pairs of (x,y)
+<span class="in">1,1</span>
+<span class="in">2,8</span>
+<span class="in">3,27</span>
+<span class="in">4,64</span>
+<span class="in">5,125</span>
+
+Enter the value of X to interpollate the value of Y:<span class="in">3.5</span>
+
+Interpolated value of Y= 42.500000</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p16">
+          <h3>Program: 12</h3>
+          <p class="question">
+            <strong>Question:</strong> Implement the Lagrangian Interpolation
+            Polynomial
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#define max 20
+void main()
+{
+int i,j,n;
+float x[max],y[max],prod,a,sum=0;
+clrscr();
+printf(&quot;\nEnter number of points:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+printf(&quot;\nEnter %d pairs of (x,y) \n&quot;,n);
+for(i=0;i&lt;n;i++)
+scanf(&quot;%f,%f&quot;,&amp;x[i],&amp;y[i]);
+printf(&quot;\nEnter value of x for interpolation:&quot;);
+scanf(&quot;%f&quot;,&amp;a);
+for(i=0;i&lt;n;i++)
+        {
+        prod=1;
+        for(j=0;j&lt;n;j++)
+                {
+                if(i!=j)
+                        prod*=(a-x[j])/(x[i]-x[j]);
+                }
+        sum+=y[i]*prod;
+        }
+printf(&quot;\nInterpolated value =%.3f&quot;,sum);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+Enter number of points:<span class="in">5</span>
+
+Enter 5 pairs of (x,y) 
+<span class="in">1,1</span>
+<span class="in">2,8</span>
+<span class="in">3,27</span>
+<span class="in">4,64</span>
+<span class="in">5,125</span>
+
+Enter value of x for interpolation:<span class="in">3.5</span>
+
+Interpolated value =42.875</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="inv">
+          <h3>Program: 13</h3>
+          <p class="question">
+            <strong>Question:</strong> Inverse Lagrange Interpolation (find x
+            for a given y)
+          </p>
+          <h4>C Source Code</h4>
+          <pre
+            class="code"
+          ><code>#include &lt;stdio.h&gt;   /* corrected: headers need .h */
+int main(){
+int n;
+printf(&quot;Enter number of data points:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+double x[n],y[n];
+printf(&quot;Enter the x and y values:\n&quot;);
+for(int i=0;i&lt;n;i++){
+printf(&quot;x[%d]:&quot;,i);
+scanf(&quot;%lf&quot;,&amp;x[i]);
+printf(&quot;y[%d]:&quot;,i);
+scanf(&quot;%lf&quot;,&amp;y[i]);
+}
+double yp;
+printf(&quot;Enter the value of y to find corresponding x:&quot;);
+scanf(&quot;%lf&quot;,&amp;yp);
+double xp= 0.0;
+// Inverse Lagrange interpolation
+for(int i=0;i&lt;n;i++){
+double term=x[i];
+for(int j=0;j&lt;n;j++){
+if(j!=i){
+term*= (yp-y[j])/(y[i]-y[j]);
+}}
+xp +=term;
+}
+printf(&quot;Estimated value of x for y= %.2lf is %.4lf\n&quot;,yp,xp);
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre
+            class="terminal"
+          ><code>Enter number of data points:<span class="in">4</span>
+Enter the x and y values:
+x[0]:<span class="in">1</span>
+y[0]:<span class="in">1</span>
+x[1]:<span class="in">2</span>
+y[1]:<span class="in">8</span>
+x[2]:<span class="in">3</span>
+y[2]:<span class="in">27</span>
+x[3]:<span class="in">4</span>
+y[3]:<span class="in">64</span>
+Enter the value of y to find corresponding x:<span class="in">30</span>
+Estimated value of x for y= 30.00 is 3.0204</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p17">
+          <h3>Program: 14</h3>
+          <p class="question">
+            <strong>Question:</strong> Implement the Trapezoidal Rule (for a
+            known function)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;process.h&gt;
+#include &lt;conio.h&gt;
+
+float f(float x)
+        {
+        return (1.0/(1+x*x*x*x));
+        }
+
+void main()
+  {
+        int n,i;
+        float a,b,h,sum,intg;
+        clrscr();
+        printf(&quot;\nEnter values of a and b: &quot;);
+        scanf(&quot;%f, %f&quot;,&amp;a,&amp;b);
+        printf(&quot;Enter Number of sub-intervals: &quot;);
+        scanf(&quot;%d&quot;,&amp;n);
+        if(a&gt;b)
+        {
+                printf(&quot;Invalid Input.&quot;);
+                getch();
+                exit(0);
+        }
+        h = (b-a)/n;
+        sum = f(a)+f(b);
+        for(i = 1;i&lt;= n-1;i++)
+                {
+                sum = sum+2*f(a+(i*h));
+                }
+        intg = (h/2)*sum;
+        printf(&quot;Integral : %.4f&quot;,intg);
+        getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+Enter values of a and b: <span class="in">0, 1</span>
+Enter Number of sub-intervals: <span class="in">4</span>
+Integral : 0.8617</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p18">
+          <h3>Program: 15</h3>
+          <p class="question">
+            <strong>Question:</strong> Implement Simpson&#x27;s 1/3 Rule for
+            Integration (known function)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;process.h&gt;
+#include&lt;conio.h&gt;
+
+float f(float x)
+        {
+        return 1/(1+x*x*x*x);
+        }
+
+void main()
+        {
+        int n,i;
+        float h,sum,intg,a,b;
+        clrscr();
+        printf(&quot;\nEnter Values of a and b: &quot;);
+        scanf(&quot;%f, %f&quot;,&amp;a,&amp;b);
+        printf(&quot;Enter Number of sub-intervals : &quot;);
+        scanf(&quot;%d&quot;,&amp;n);
+        if(a&gt;b)
+         {
+         printf(&quot;Invalid Input...&quot;);
+         getch();
+         exit(0);
+         }
+         h=(b-a)/n;
+         sum=f(a)+f(b);
+         for(i=1;i&lt;=n-1;i++)
+          {
+          if(i%2 == 0)
+          sum += 2*f(a+i*h);
+          else
+          sum += 4*f(a+i*h);
+          }
+        intg=sum*(h/3);
+        printf(&quot;Integral : %.4f&quot;,intg);
+        getch();
+        }</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+Enter Values of a and b: <span class="in">0, 1</span>
+Enter Number of sub-intervals : <span class="in">4</span>
+Integral : 0.8671</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="p19">
+          <h3>Program: 16</h3>
+          <p class="question">
+            <strong>Question:</strong> Implement Simpson&#x27;s 3/8 Rule for
+            Integration (known function)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+#include&lt;stdlib.h&gt;
+#define Max 50
+float f(float x)
+        {
+        return 1/(1+x*x);
+        }
+
+void main()
+{
+float a,b,h,x[Max],y[Max],sum,intg;
+int i,n;
+clrscr();
+        printf(&quot;\nEnter Values of a and b: &quot;);
+        scanf(&quot;%f %f&quot;,&amp;a,&amp;b);
+        printf(&quot;Enter Number of sub-intervals : &quot;);
+        scanf(&quot;%d&quot;,&amp;n);
+        if(a&gt;b)
+        {
+         printf(&quot;Invalid Input...&quot;);
+         getch();
+         exit(0);
+        }
+        h=(b-a)/n;
+for(i=0;i&lt;=n;i++)
+        {
+        x[i]=a+i*h;
+        y[i]=f(x[i]);
+        }
+sum=y[0]+y[n];
+for(i=1;i&lt;=n-1;i++)
+        {
+        if(i%3 != 0)
+        sum +=3*y[i];
+        else
+        sum+=2*y[i];
+        }
+intg=3*sum*(h/8);
+printf(&quot;Integral : %f&quot;,intg);
+getch();
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+Enter Values of a and b: <span class="in">0 1</span>
+Enter Number of sub-intervals : <span class="in">6</span>
+Integral : 0.785396</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="eu">
+          <h3>Program: 17</h3>
+          <p class="question">
+            <strong>Question:</strong> Euler&#x27;s Method (solve a first-order
+            differential equation)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+/*Defining equation to be solved. Change this equation to solve another problem*/
+#define f(x,y) x*y
+void main()
+{
+float x0, y0, xn, h, yn, slope;
+int i, n;
+printf(&quot;Enter Initial Condition\n&quot;);
+printf(&quot;x0 = &quot;);
+scanf(&quot;%f&quot;, &amp;x0);
+printf(&quot;y0 = &quot;);
+scanf(&quot;%f&quot;, &amp;y0);
+printf(&quot;Enter calculation point xn = &quot;);
+scanf(&quot;%f&quot;, &amp;xn);
+printf(&quot;Enter number of steps: &quot;);
+scanf(&quot;%d&quot;, &amp;n);
+h = (xn-x0)/n;
+printf(&quot;\nx0\ty0\tslope\tyn\n&quot;);
+printf(&quot;------------------------------\n&quot;);
+for(i=0; i &lt; n; i++)
+{
+slope = f(x0, y0);
+yn = y0 + h * slope;
+printf(&quot;%.4f\t%.4f\t%0.4f\t%.4f\n&quot;,x0,y0,slope,yn);
+y0 = yn;
+x0 = x0+h;
+}
+printf(&quot;\nValue of y at x = %0.2f is %0.3f&quot;,xn, yn);
+return;
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>Enter Initial Condition
+x0 = <span class="in">0</span>
+y0 = <span class="in">1</span>
+Enter calculation point xn = <span class="in">1</span>
+Enter number of steps: <span class="in">5</span>
+
+x0	y0	slope	yn
+------------------------------
+0.0000	1.0000	0.0000	1.0000
+0.2000	1.0000	0.2000	1.0400
+0.4000	1.0400	0.4160	1.1232
+0.6000	1.1232	0.6739	1.2580
+0.8000	1.2580	1.0064	1.4593
+
+Value of y at x = 1.00 is 1.459</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="me">
+          <h3>Program: 18</h3>
+          <p class="question">
+            <strong>Question:</strong> Modified Euler&#x27;s Method (solve a
+            differential equation)
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+#include&lt;math.h&gt;
+double f (double x0,double y0);
+void main()
+{
+double y0,y1,y10,x0,x1,h,x,diff;
+int i,n;
+printf(&quot;\n\n\tMODIFIED EULER&#x27;S METHOD TO SOLVE DIFFERENTIAL EQUATION&quot;);
+printf(&quot;\n\nEnter x0 = &quot;);
+scanf(&quot;%lf&quot;,&amp;x0);
+printf(&quot;\n\nEnter y0 = &quot;);
+scanf(&quot;%lf&quot;,&amp;y0);
+printf(&quot;\n\nEnter the value of x at which y is to be found = &quot;);
+scanf(&quot;%lf&quot;,&amp;x);
+printf(&quot;\n\nEnter the value of h = &quot;);
+scanf(&quot;%lf&quot;,&amp;h);
+i = 0;
+while(x0 &lt; x)
+{
+i++;
+x1 = x0 + h;
+y1 = y0 + h * f(x0,y0);
+y10 = y1;
+do
+{
+y1 = y0 + (h/2) * ( f(x0,y0) + f(x1,y10) );
+diff = fabs(y1 - y10);
+y10 = y1;
+}
+while( diff &gt; 0.0001);
+printf(&quot;\nx%d = %lf    y%d = %lf&quot;,i,x1,i,y1);
+x0 = x1;
+y0 = y1;
+}
+}
+
+/*Defining function to be solved. Change this function to solve different problem*/
+double f (double x,double y)
+{
+double y_dash;
+y_dash = x*x + y;
+return(y_dash);
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>
+
+	MODIFIED EULER&#x27;S METHOD TO SOLVE DIFFERENTIAL EQUATION
+
+Enter x0 = <span class="in">0</span>
+
+
+Enter y0 = <span class="in">1</span>
+
+
+Enter the value of x at which y is to be found = <span class="in">0.2</span>
+
+
+Enter the value of h = <span class="in">0.1</span>
+
+x1 = 0.100000    y1 = 1.105789
+x2 = 0.200000    y2 = 1.224818</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="rk2">
+          <h3>Program: 19</h3>
+          <p class="question">
+            <strong>Question:</strong> Runge-Kutta Second Order Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+/*Defining function to be solved. Change this function to solve different problem*/
+#define f(x,y) (x*y)
+void main()
+{
+float x0, y0, xn, h, yn, k1, k2, k;
+int i, n;
+printf(&quot;Enter Initial Condition\n&quot;);
+printf(&quot;x0 = &quot;);
+scanf(&quot;%f&quot;, &amp;x0);
+printf(&quot;y0 = &quot;);
+scanf(&quot;%f&quot;, &amp;y0);
+printf(&quot;Enter calculation point xn = &quot;);
+scanf(&quot;%f&quot;, &amp;xn);
+printf(&quot;Enter number of steps: &quot;);
+scanf(&quot;%d&quot;, &amp;n);
+h = (xn-x0)/n;
+printf(&quot;\nx0\ty0\tyn\n&quot;);
+for(i=0; i &lt; n; i++)
+{
+k1 = h * (f(x0, y0));
+k2 = h * (f((x0+h), (y0+k1)));
+k = (k1+k2)/2;
+yn = y0 + k;
+printf(&quot;%0.4f\t%0.4f\t%0.4f\n&quot;,x0,y0,yn);
+x0 = x0+h;
+y0 = yn;
+}
+printf(&quot;\nValue of y at x = %0.2f is %0.3f&quot;,xn, yn);
+return;
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>Enter Initial Condition
+x0 = <span class="in">0</span>
+y0 = <span class="in">1</span>
+Enter calculation point xn = <span class="in">1</span>
+Enter number of steps: <span class="in">5</span>
+
+x0	y0	yn
+0.0000	1.0000	1.0200
+0.2000	1.0200	1.0828
+0.4000	1.0828	1.1963
+0.6000	1.1963	1.3753
+0.8000	1.3753	1.6448
+
+Value of y at x = 1.00 is 1.645</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+        <article class="program" id="rk4">
+          <h3>Program: 20</h3>
+          <p class="question">
+            <strong>Question:</strong> Runge-Kutta Fourth Order Method
+          </p>
+          <h4>C Source Code</h4>
+          <pre class="code"><code>#include&lt;stdio.h&gt;
+/*Defining function to be solved. Change this function to solve different problem*/
+#define f(x,y) (y*y-x*x)/(y*y+x*x)
+void main()
+{
+float x0, y0, xn, h, yn, k1, k2, k3, k4, k;
+int i, n;
+clrscr();
+printf(&quot;Enter Initial Condition\n&quot;);
+printf(&quot;x0 = &quot;);
+scanf(&quot;%f&quot;, &amp;x0);
+printf(&quot;y0 = &quot;);
+scanf(&quot;%f&quot;, &amp;y0);
+printf(&quot;Enter calculation point xn = &quot;);
+scanf(&quot;%f&quot;, &amp;xn);
+printf(&quot;Enter number of steps: &quot;);
+scanf(&quot;%d&quot;, &amp;n);
+h = (xn-x0)/n;
+printf(&quot;\nx0\ty0\tyn\n&quot;);
+for(i=0; i &lt; n; i++)
+{
+k1 = h * (f(x0, y0));
+k2 = h * (f((x0+h/2), (y0+k1/2)));
+k3 = h * (f((x0+h/2), (y0+k2/2)));
+k4 = h * (f((x0+h), (y0+k3)));
+k = (k1+2*k2+2*k3+k4)/6;
+yn = y0 + k;
+printf(&quot;%0.4f\t%0.4f\t%0.4f\n&quot;,x0,y0,yn);
+x0 = x0+h;
+y0 = yn;
+}
+printf(&quot;\nValue of y at x = %0.2f is %0.3f&quot;,xn, yn);
+return;
+}</code></pre>
+          <h4>Sample Output</h4>
+          <pre class="terminal"><code>Enter Initial Condition
+x0 = <span class="in">0</span>
+y0 = <span class="in">1</span>
+Enter calculation point xn = <span class="in">0.4</span>
+Enter number of steps: <span class="in">4</span>
+
+x0	y0	yn
+0.0000	1.0000	1.0994
+0.1000	1.0994	1.1960
+0.2000	1.1960	1.2882
+0.3000	1.2882	1.3753
+
+Value of y at x = 0.40 is 1.375</code></pre>
+          <p class="top">
+            <a href="#top">Back to Top</a> |
+            <a href="#programs">All Programs</a>
+          </p>
+        </article>
+      </section>
+    </main>
+    <footer>
+      <p>Computer Oriented Numerical Methods &ndash; Practical Work</p>
+    </footer>
+  </body>
+</html>
